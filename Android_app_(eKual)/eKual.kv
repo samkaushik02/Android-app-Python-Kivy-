@@ -1,0 +1,172 @@
+#:import COLOR kivy.utils.get_color_from_hex
+#:set RED "#F94A69"
+#:set GREEN "#06A5AB"
+#:set BLUE "#16203B"
+
+<WrappedLabel@Label>:
+    size_hint_y: None
+    height: self.texture_size[1] + (self.texture_size[1]/2)
+    markup: True
+    font_name: "My_Font"
+
+<Button>:
+    font_name: "My_Font"
+    font_size: min(self.height, self.width) / 2
+    bold: True
+    background_color: COLOR("#0066BA")
+    border: (2, 2, 2, 2)
+
+<eKualRoot>:
+    orientation: "vertical"
+    kivy_screen_manager: kivy_screen_manager
+    math_screen: math_screen
+    ActionBar:       
+        ActionView:            
+            ActionPrevious:
+                title: "e - K u a l"            
+                app_icon:"./images/log.png"
+                with_previous: False
+                ActionSeparator:                    
+            ActionButton:
+                text: " Settings "
+                on_press: app.open_settings()
+                ActionSeparator:
+
+    ScreenManager:
+        id: kivy_screen_manager
+        StartScreen:
+            name: "start_screen"
+        AboutScreen:
+            id: about_screen
+            name: "about_screen"
+        MathScreen:
+            id: math_screen
+            name: "math_screen"
+
+<StartScreen@Screen>:
+    BoxLayout:
+        # Settings
+        orientation: "vertical"
+        canvas:
+            Rectangle:
+                source: "./images/u.jpg"
+                size:self.size
+                pos: self.pos
+
+        padding: root.width * .02, root.height * .02
+        spacing: min(root.width, root.height) * .02
+
+        WrappedLabel:
+            text: "[b]e  ~  K  u  a  l [/b]"
+            font_size: min(root.height, root.width) / 10
+
+        Button:
+            text: "Addition"
+            background_color: COLOR("#0066BA")
+            on_release: app.root.changeScreen(self.text.lower())
+            background_normal: "./images/button_normal.png"
+            background_down: "./images/button_down.png"
+
+        Button:
+            text: "Subtraction"
+            background_color: COLOR("#0066BA")
+            on_release: app.root.changeScreen(self.text.lower())
+            background_normal: "./images/button_normal.png"
+            background_down: "./images/button_down.png"
+
+        Button:
+            text: "Multiplication"
+            background_color: COLOR("#0066BA")
+            on_release: app.root.changeScreen(self.text.lower())
+            background_normal: "./images/button_normal.png"
+            background_down: "./images/button_down.png"
+
+        Button:
+            text: "Division"
+            background_color: COLOR("#0066BA")
+            on_release: app.root.changeScreen(self.text.lower())
+            background_normal: "./images/button_normal.png"
+            background_down: "./images/button_down.png"
+
+        Button:
+            text: "Mix"
+            on_release: app.root.changeScreen(self.text.lower())
+            background_color: COLOR("#0066BA")
+            background_normal: "./images/button_normal.png"
+            background_down: "./images/button_down.png"
+
+        Button:
+            text: "About this App"
+            on_release: app.root.changeScreen(self.text.lower())
+            background_color: COLOR(RED)
+            background_normal: "./images/button_normal.png"
+            background_down: "./images/button_down.png"
+
+
+<MathScreen>:
+    question_text: question_text
+    answer_text: answer_text
+    BoxLayout:
+        orientation: "vertical"
+        canvas:
+            Rectangle:
+                source: "./images/u.jpg"
+                size:self.size
+                pos:self.pos
+        padding: root.width * .02, root.height * .02
+        spacing: 10
+        WrappedLabel:
+            id: question_text
+            text: " "
+            font_size: min(root.height, root.width) / 10
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            WrappedLabel:
+                id: answer_text
+                text: ""
+                font_size: min(root.height, root.width) / 10
+
+        KeyPad:
+            
+
+<MathPopup>:
+    size_hint: .5, .5
+    title: "R E S U L T"
+    title_color: COLOR(RED)
+    title_align: "center"
+    title_size: root.height * .1
+    seperator_color: COLOR(BLUE)
+    auto_dissmiss: True
+    message: message
+    BoxLayout:
+        orientation: "vertical"
+        padding: root.width * .02, root.height * .01
+        spacing: min(root.width, root.height) * .01
+        Label:
+            id: message
+            text: ""
+            halign: "center"
+            markup: True
+            font_size: root.height / 12
+            text_size: self.width, None
+            center_y: .5
+
+<AboutScreen@Screen>:
+    BoxLayout:
+        padding: root.width * .02, root.height * .02
+        canvas:
+            Rectangle:
+                source: "./images/u.jpg"
+                size:self.size
+                pos:self.pos
+        Label:
+            text: app.getText()
+
+            halign: "center"
+            markup: True
+            font_size: root.height / 18
+            text_size: self.width, None
+            center_y: .5
+            on_ref_press: app.on_ref_press(*args)
